@@ -1,208 +1,97 @@
-import React, { useContext, useState } from "react";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
 import "./Cart.css";
-import { CartContext } from "../../context/CartContext";
+import { CartContext } from "../../context/Cartcontext";
 
 function Cart() {
-
-  const {
-    cart,
-    removeFromCart
-  } = useContext(CartContext);
-
-  const [quantities, setQuantities] = useState({});
-
-  // Increase Quantity
-  const increaseQuantity = (id) => {
-    setQuantities((previous) => ({
-      ...previous,
-      [id]: (previous[id] || 1) + 1
-    }));
-  };
-
-  // Decrease Quantity
-  const decreaseQuantity = (id) => {
-    setQuantities((previous) => ({
-      ...previous,
-      [id]: Math.max(
-        (previous[id] || 1) - 1,
-        1
-      )
-    }));
-  };
-
-  // Remove Product
-  const handleRemove = (id) => {
-
-    removeFromCart(id);
-
-    setQuantities((previous) => {
-
-      const updated = {
-        ...previous
-      };
-
-      delete updated[id];
-
-      return updated;
-    });
-  };
-
-  // Calculate Total
+  const { cart, updateQuantity, removeFromCart } = useContext(CartContext);
   const total = cart.reduce(
-    (sum, product) => {
-
-      const quantity =
-        quantities[product.id] || 1;
-
-      return (
-        sum +
-        product.price * quantity
-      );
-    },
+    (sum, product) => sum + product.price * product.quantity,
     0
   );
 
-  // Checkout
-  const handleCheckout = () => {
-    alert("Order placed successfully!");
-  };
-
   return (
     <div className="container mt-5">
-
       <h1 className="text-center mb-4">
         Shopping Cart
       </h1>
 
       {cart.length === 0 ? (
-
-        <h2 className="text-center">
-          Your cart is empty
-        </h2>
-
+        <div className="text-center">
+          <h2>Your cart is empty</h2>
+          <Link to="/products" className="btn btn-primary mt-3">
+            Browse Products
+          </Link>
+        </div>
       ) : (
-
         <>
-          {cart.map((product) => {
-
-            const quantity =
-              quantities[product.id] || 1;
-
-            return (
-              <div
-                className="card mb-3"
-                key={product.id}
-              >
-
-                <div className="row g-0 align-items-center">
-
-                  {/* Product Image */}
-                  <div className="col-md-2">
-
+          {cart.map((product) => (
+            <div className="card mb-3" key={product.id}>
+              <div className="row g-0 align-items-center">
+                <div className="col-md-2 text-center">
+                  <Link to={`/products/${product.id}`}>
                     <img
-                      src={product.image}
-                      alt={product.name}
+                      src={product.thumbnail}
+                      alt={product.title}
                       style={{
                         width: "150px",
                         height: "150px",
-                        objectFit: "cover"
+                        objectFit: "contain",
                       }}
                     />
-
-                  </div>
-
-                  {/* Product Details */}
-                  <div className="col-md-5">
-
-                    <div className="card-body">
-
-                      <h4>
-                        {product.name}
-                      </h4>
-
-                      <p>
-                        {product.description}
-                      </p>
-
-                      <h5>
-                        ₹{product.price}
-                      </h5>
-
-                    </div>
-
-                  </div>
-
-                  {/* Quantity */}
-                  <div className="col-md-3">
-
-                    <button
-                      className="btn btn-danger"
-                      onClick={() =>
-                        decreaseQuantity(
-                          product.id
-                        )
-                      }
-                    >
-                      -
-                    </button>
-
-                    <span className="mx-3">
-                      {quantity}
-                    </span>
-
-                    <button
-                      className="btn btn-success"
-                      onClick={() =>
-                        increaseQuantity(
-                          product.id
-                        )
-                      }
-                    >
-                      +
-                    </button>
-
-                    <br />
-
-                    {/* Remove Button */}
-                    <button
-                      className="btn btn-danger mt-2"
-                      onClick={() =>
-                        handleRemove(
-                          product.id
-                        )
-                      }
-                    >
-                      Remove
-                    </button>
-
-                  </div>
-
+                  </Link>
                 </div>
 
+                <div className="col-md-6">
+                  <div className="card-body">
+                    <h4>{product.title}</h4>
+                    <p>{product.description}</p>
+                    <h5>${product.price.toFixed(2)}</h5>
+                  </div>
+                </div>
+
+                <div className="col-md-4 text-center pb-3 pb-md-0">
+                  <button
+                    className="btn btn-outline-secondary"
+                    aria-label={`Decrease quantity of ${product.title}`}
+                    onClick={() =>
+                      updateQuantity(product.id, product.quantity - 1)
+                    }
+                  >
+                    -
+                  </button>
+                  <span className="mx-3">{product.quantity}</span>
+                  <button
+                    className="btn btn-outline-secondary"
+                    aria-label={`Increase quantity of ${product.title}`}
+                    onClick={() =>
+                      updateQuantity(product.id, product.quantity + 1)
+                    }
+                  >
+                    +
+                  </button>
+                  <p className="mt-2 mb-1">
+                    Subtotal: ${(product.price * product.quantity).toFixed(2)}
+                  </p>
+                  <button
+                    className="btn btn-danger btn-sm mt-1"
+                    onClick={() => removeFromCart(product.id)}
+                  >
+                    Remove
+                  </button>
+                </div>
               </div>
-            );
-          })}
+            </div>
+          ))}
 
-          {/* Total */}
-          <div className="text-end">
-
-            <h2>
-              Total: ₹{total}
-            </h2>
-
-            {/* Checkout Button */}
-            <button
-              className="btn btn-primary"
-              onClick={handleCheckout}
-            >
+          <div className="text-end mb-5">
+            <h2>Total: ${total.toFixed(2)}</h2>
+            <Link to="/checkout" className="btn btn-primary">
               Checkout
-            </button>
-
+            </Link>
           </div>
-
         </>
       )}
-
     </div>
   );
 }

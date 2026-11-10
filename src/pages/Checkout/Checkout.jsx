@@ -1,5 +1,6 @@
-import React, { useContext, useState } from "react";
-import { CartContext } from "../../context/CartContext";
+import { useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import { CartContext } from "../../context/Cartcontext";
 import "./Checkout.css";
 
 function Checkout() {
@@ -15,9 +16,7 @@ function Checkout() {
 
   // Calculate Total
   const total = cart.reduce(
-    (sum, product) => {
-      return sum + product.price;
-    },
+    (sum, product) => sum + product.price * product.quantity,
     0
   );
 
@@ -132,11 +131,11 @@ function Checkout() {
               >
 
                 <span>
-                  {product.name}
+                  {product.title} × {product.quantity}
                 </span>
 
                 <span>
-                  ₹{product.price}
+                  ${(product.price * product.quantity).toFixed(2)}
                 </span>
 
               </div>
@@ -146,16 +145,22 @@ function Checkout() {
             <hr />
 
             <h4>
-              Total: ₹{total}
+              Total: ${total.toFixed(2)}
             </h4>
 
             {/* Place Order */}
-            <button
-              className="btn btn-success mt-3"
-              onClick={handlePlaceOrder}
-            >
-              Place Order
-            </button>
+            {cart.length > 0 ? (
+              <button
+                className="btn btn-success mt-3"
+                onClick={handlePlaceOrder}
+              >
+                Place Order
+              </button>
+            ) : (
+              <Link to="/products" className="btn btn-primary mt-3">
+                Browse Products
+              </Link>
+            )}
 
           </div>
 

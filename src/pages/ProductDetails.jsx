@@ -1,27 +1,54 @@
 
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { useContext } from "react";
+import { CartContext } from "../context/Cartcontext";
 
 export default function ProductDetails() {
-  let { id } = useParams();
+  const { id } = useParams();
+  const { addToCart } = useContext(CartContext);
 
-  let [product, setProduct] = useState(null);
-  let [added, setAdded] = useState(false);
+  const [product, setProduct] = useState(null);
+  const [added, setAdded] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
+    const controller = new AbortController();
+
     async function getProduct() {
-      let response = await fetch(
-        `https://dummyjson.com/products/${id}`
-      );
-
-      let data = await response.json();
-
-      setProduct(data);
+      setProduct(null);
+      setError("");
       setAdded(false);
+
+      try {
+        const response = await fetch(
+          `https://dummyjson.com/products/${id}`,
+          { signal: controller.signal }
+        );
+        if (!response.ok) {
+          throw new Error("Unable to load this product.");
+        }
+
+        const data = await response.json();
+        setProduct(data);
+      } catch (loadError) {
+        if (loadError.name !== "AbortError") {
+          setError(loadError.message);
+        }
+      }
     }
 
     getProduct();
+    return () => controller.abort();
   }, [id]);
+
+  if (error) {
+    return (
+      <p className="container mt-5 text-center" role="alert">
+        {error}
+      </p>
+    );
+  }
 
   if (!product) {
     return (
@@ -60,19 +87,19 @@ export default function ProductDetails() {
 
             <button
               className="btn btn-success me-2"
-              onClick={() => setAdded(true)}
-              disabled={added}
+              onClick={() => {
+                addToCart(product);
+                setAdded(true);
+              }}
             >
-              {added ? "Added" : "Add"}
+              {added ? "Add Another" : "Add to Cart"}
             </button>
 
-            <button
-              className="btn btn-danger"
-              onClick={() => setAdded(false)}
-              disabled={!added}
-            >
-              Remove
-            </button>
+            {added && (
+              <Link to="/cart" className="btn btn-primary">
+                View Cart
+              </Link>
+            )}
 
             <div>
               <Link

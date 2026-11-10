@@ -12,10 +12,10 @@ import Contact from "./pages/Contact/Contact";
 import { Login } from "./pages/Login/Login";
 
 import Navbar from "./components/Navbar/Navbar";
-import Footer from "./components/Footer/Footer";
+import Footer from "./components/footer/footer";
 import { Counter } from "./components/Counter/Counter";
 
-import { CartProvider } from "./context/CartContext";
+import { CartProvider } from "./context/Cartcontext";
 
 function App() {
   let location = useLocation();
