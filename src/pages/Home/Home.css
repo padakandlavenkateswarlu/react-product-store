@@ -1,0 +1,249 @@
+.store-carousel {
+  position: relative;
+  min-height: 390px;
+  margin: 0 24px 40px;
+  overflow: hidden;
+  border-radius: 22px;
+  background: #f3f5ff;
+}
+
+.store-slide {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+  gap: 24px;
+  padding: 48px 9%;
+  opacity: 0;
+  transform: translateX(24px);
+  transition: opacity 500ms ease, transform 500ms ease;
+  pointer-events: none;
+}
+
+.store-slide.is-active {
+  z-index: 1;
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.store-slide--tech {
+  background: linear-gradient(115deg, #eef2ff, #dce5ff);
+}
+
+.store-slide--mobile {
+  background: linear-gradient(115deg, #fff2e8, #ffe0d0);
+}
+
+.store-slide--audio {
+  background: linear-gradient(115deg, #e8fbf6, #c9f1e7);
+}
+
+.store-slide-copy {
+  max-width: 520px;
+  text-align: left;
+}
+
+.store-slide-eyebrow {
+  margin-bottom: 12px;
+  color: #0d6efd;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.store-slide-copy h2 {
+  margin-bottom: 14px;
+  color: #172033;
+  font-size: clamp(28px, 4vw, 46px);
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.store-slide-description {
+  margin-bottom: 24px;
+  color: #4b5563;
+  font-size: 17px;
+}
+
+.store-slide-button {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 8px;
+  background: #0d6efd;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.store-slide-button:hover {
+  background: #084298;
+  color: #fff;
+}
+
+.store-slide-image {
+  display: grid;
+  min-height: 260px;
+  place-items: center;
+}
+
+.store-slide-image img {
+  width: min(100%, 340px);
+  height: 260px;
+  border-radius: 18px;
+  background: #fff;
+  object-fit: contain;
+  box-shadow: 0 18px 40px rgba(23, 32, 51, 0.12);
+}
+
+.store-slide-indicators {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  bottom: 18px;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  gap: 9px;
+}
+
+.store-slide-indicators button {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(23, 32, 51, 0.3);
+  cursor: pointer;
+  transition: width 200ms ease, background 200ms ease;
+}
+
+.store-slide-indicators button.is-active {
+  width: 28px;
+  background: #0d6efd;
+}
+
+.highlights-section {
+  padding: 60px 20px;
+  text-align: center;
+  background: #f5f7fa;
+}
+
+.highlights-section h2 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.highlights-subtitle {
+  color: #666;
+  margin-bottom: 35px;
+}
+
+.highlights-container {
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+}
+
+.highlight-card {
+  background: white;
+  padding: 30px 20px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+}
+
+.highlight-card:hover {
+  transform: translateY(-8px);
+}
+
+.highlight-icon {
+  font-size: 45px;
+  margin-bottom: 15px;
+}
+
+.highlight-card h3 {
+  margin-bottom: 10px;
+}
+
+.highlight-card p {
+  color: #666;
+  line-height: 1.6;
+}
+
+
+/* Tablet */
+
+@media (max-width: 992px) {
+
+  .highlights-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .store-carousel {
+    min-height: 340px;
+  }
+
+  .store-slide {
+    padding: 38px 7%;
+  }
+
+  .store-slide-image {
+    min-height: 220px;
+  }
+
+  .store-slide-image img {
+    height: 220px;
+  }
+
+}
+
+
+/* Mobile */
+
+@media (max-width: 576px) {
+
+  .highlights-container {
+    grid-template-columns: 1fr;
+  }
+
+  .store-carousel {
+    min-height: 520px;
+    margin: 0 12px 32px;
+  }
+
+  .store-slide {
+    grid-template-columns: 1fr;
+    align-content: center;
+    gap: 14px;
+    padding: 30px 24px 48px;
+  }
+
+  .store-slide-copy {
+    text-align: center;
+  }
+
+  .store-slide-description {
+    font-size: 15px;
+  }
+
+  .store-slide-image {
+    min-height: 180px;
+  }
+
+  .store-slide-image img {
+    width: min(100%, 240px);
+    height: 180px;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .store-slide,
+  .store-slide-indicators button {
+    transition: none;
+  }
+}

@@ -1,0 +1,98 @@
+.blog-container {
+  min-height: 100vh;
+  padding: 40px;
+  background: #f5f5f5;
+  text-align: center;
+}
+
+.blog-container h1 {
+  margin-bottom: 40px;
+  font-size: 35px;
+}
+
+.blog-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  align-items: stretch;
+  gap: 30px;
+  perspective: 1200px;
+}
+
+.blog-card {
+  overflow: hidden;
+  border-radius: 15px;
+  background: #fff;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  transform-style: preserve-3d;
+  animation: rotateCard 8s linear infinite;
+}
+
+.blog-card:hover {
+  animation-play-state: paused;
+}
+
+.blog-image-link {
+  display: block;
+}
+
+.blog-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: contain;
+  background: #fff;
+}
+
+.blog-content {
+  padding: 20px;
+}
+
+.blog-title-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.blog-content h2 {
+  margin-bottom: 10px;
+  font-size: 22px;
+}
+
+.blog-content p {
+  color: #666;
+}
+
+.blog-content h3 {
+  margin: 15px 0;
+}
+
+.blog-details-button {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: #0d6efd;
+  color: #fff;
+  text-decoration: none;
+}
+
+.blog-details-button:hover {
+  background: #084298;
+}
+
+.blog-error {
+  color: #b42318;
+}
+
+@keyframes rotateCard {
+  from {
+    transform: rotateY(0deg);
+  }
+
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blog-card {
+    animation: none;
+  }
+}

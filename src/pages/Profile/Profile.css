@@ -1,0 +1,177 @@
+.profile-page {
+  min-height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 20px;
+  background: #f4f6f9;
+}
+
+.profile-card {
+  width: 550px;
+  background: white;
+  padding: 35px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Profile Image */
+
+.profile-image-container {
+  margin-bottom: 20px;
+}
+
+.profile-image {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid #0d6efd;
+}
+
+/* Name */
+
+.profile-card h1 {
+  margin-bottom: 5px;
+  font-size: 32px;
+}
+
+/* Role */
+
+.profile-role {
+  color: #0d6efd;
+  margin-bottom: 15px;
+}
+
+/* Bio */
+
+.profile-bio {
+  color: #666;
+  line-height: 1.7;
+  margin-bottom: 25px;
+}
+
+/* Details */
+
+.profile-details {
+  text-align: left;
+  margin-top: 20px;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 5px;
+  border-bottom: 1px solid #eee;
+}
+
+.detail-item strong {
+  color: #333;
+}
+
+.detail-item span {
+  color: #666;
+}
+
+/* Section Title */
+
+.section-title {
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+
+/* Skills */
+
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.skills span {
+  background: #e7f1ff;
+  color: #0d6efd;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Statistics */
+
+.profile-stats {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 30px;
+  padding: 20px 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.profile-stats h3 {
+  margin: 0;
+  color: #0d6efd;
+}
+
+.profile-stats p {
+  margin: 5px 0 0;
+  color: #666;
+}
+
+/* Buttons */
+
+.profile-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.profile-buttons button {
+  padding: 11px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.edit-btn {
+  background: #0d6efd;
+  color: white;
+}
+
+.contact-btn {
+  background: #198754;
+  color: white;
+}
+
+.edit-btn:hover,
+.contact-btn:hover {
+  opacity: 0.85;
+}
+
+/* Mobile */
+
+@media (max-width: 576px) {
+
+  .profile-card {
+    width: 100%;
+    padding: 25px 20px;
+  }
+
+  .detail-item {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .profile-buttons {
+    flex-direction: column;
+  }
+
+  .profile-buttons button {
+    width: 100%;
+  }
+
+}
